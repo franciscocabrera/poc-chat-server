@@ -1,0 +1,22 @@
+const db = require("../_db");
+const Chat = db.Chat;
+
+exports.getUserChats = async (userId) => {
+  return await Chat.find({ userId: userId });
+};
+
+exports.createChat = async (userId) => {
+  const chat = new Chat({
+    userId: userId,
+    messages: [],
+  });
+  return await chat.save(chat);
+};
+
+exports.updateChat = async (_id, body) => {
+  return await Chat.findOneAndUpdate({ _id }, body);
+};
+
+exports.deleteChat = async (_id) => {
+  return await Chat.findOneAndDelete({ _id });
+};
