@@ -41,6 +41,27 @@ exports.updateChat = async (req, res, next) => {
   }
 };
 
+exports.addMessage = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    if (!id || !req.body.userId || !req.body.message) return next(e400);
+
+    const chat = await chatServices.getChat(id);
+
+    if (!chat) return next(e404);
+
+    const messages = [...chat.messages, req.body.message];
+
+    const newChat = await chatServices.addMessage(id, messages);
+
+    if (!newChat) return next(e404);
+    res.json(newChat);
+  } catch (error) {
+    next({ ...e500, message: error.message || error });
+  }
+};
+
 exports.deleteChat = async (req, res, next) => {
   try {
     const id = req.params.id;
