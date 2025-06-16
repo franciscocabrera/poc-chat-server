@@ -40,7 +40,14 @@ app.use(routes.CHATS, chatsRouter);
 // Error handling
 app.use((err, req, res, next) => {
   console.log("ERROR:" + JSON.stringify(err));
-  res.json(err);
+
+  // By default, assume internal server error
+  let status = 500;
+  if (err.status)
+    status = err.status
+
+  // Return error status and message
+  res.status(status).json(err);
 });
 
 // Database handling
