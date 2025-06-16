@@ -9,10 +9,10 @@ exports.getChat = async (_id) => {
   return await Chat.findById(_id);
 };
 
-exports.createChat = async (userId) => {
+exports.createChat = async (userId, messages) => {
   const chat = new Chat({
     userId: userId,
-    messages: [],
+    messages: messages,
   });
   return await chat.save(chat);
 };

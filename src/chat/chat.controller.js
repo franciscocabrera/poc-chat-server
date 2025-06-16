@@ -21,7 +21,7 @@ exports.getChat = async (req, res, next) => {
 
     const chat = await chatServices.getChat(id);
 
-    if (!user) return next(e404);
+    if (!chat) return next(e404);
 
     res.json(chat);
   } catch (error) {
@@ -31,9 +31,13 @@ exports.getChat = async (req, res, next) => {
 
 exports.createChat = async (req, res, next) => {
   try {
-    if (!req.userId) return next(e400);
+    if (
+      !req.body.userId ||
+      !req.body.messages ||
+      req.body.messages.length == 0
+    ) return next(e400);
 
-    const chats = await chatServices.createChat(req.userId);
+    const chats = await chatServices.createChat(req.body.userId, req.body.messages);
     res.json(chats);
   } catch (error) {
     next({ ...e500, message: error.message || error });
