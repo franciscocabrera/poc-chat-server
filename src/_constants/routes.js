@@ -1,5 +1,6 @@
 const routes = {
-  USERS: '/users',
+  USERS: "/users",
+  CHATS: "/chats",
 };
 
 module.exports = routes;

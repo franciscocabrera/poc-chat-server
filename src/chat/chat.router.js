@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   getUserChats,
+  getChat,
   createChat,
   updateChat,
   deleteChat,
@@ -10,6 +11,8 @@ const {
 const router = express.Router();
 
 router.get("/", getUserChats);
+
+router.get("/:id", getChat);
 
 router.post("/", createChat);
 

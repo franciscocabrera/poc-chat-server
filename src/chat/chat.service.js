@@ -18,7 +18,7 @@ exports.createChat = async (userId) => {
 };
 
 exports.updateChat = async (_id, body) => {
-  return await Chat.findOneAndUpdate({ _id }, body);
+  return await Chat.findOneAndUpdate({ _id }, body, { new: true });
 };
 
 exports.addMessage = async (_id, messages) => {

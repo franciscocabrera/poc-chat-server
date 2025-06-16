@@ -3,13 +3,27 @@ const { e400, e404, e500 } = require("../_constants/errors");
 
 exports.getUserChats = async (req, res, next) => {
   try {
-    if (!req.userId) return next(e400);
+    if (!req.query.userId) return next(e400);
 
-    const chats = await chatServices.getUserChats(req.userId);
-
-    if (!chats) return next(e404);
+    const chats = await chatServices.getUserChats(req.query.userId);
 
     res.json(chats);
+  } catch (error) {
+    next({ ...e500, message: error.message || error });
+  }
+};
+
+exports.getChat = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    if (!id) return next(e400);
+
+    const chat = await chatServices.getChat(id);
+
+    if (!user) return next(e404);
+
+    res.json(chat);
   } catch (error) {
     next({ ...e500, message: error.message || error });
   }
