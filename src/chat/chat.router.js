@@ -6,6 +6,7 @@ const {
   createChat,
   updateChat,
   deleteChat,
+  addMessage,
 } = require("./chat.controller");
 
 const router = express.Router();
@@ -19,5 +20,7 @@ router.post("/", createChat);
 router.put("/:id", updateChat);
 
 router.delete("/:id", deleteChat);
+
+router.post("/:id/message", addMessage);
 
 module.exports = router;

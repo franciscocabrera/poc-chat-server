@@ -61,19 +61,16 @@ exports.updateChat = async (req, res, next) => {
 
 exports.addMessage = async (req, res, next) => {
   try {
+
     const id = req.params.id;
+    if (!id) return next({ ...e400, message: "Id is missing" });
 
-    if (!id || !req.body.userId || !req.body.message) return next(e400);
+    const message = req.body.message
+    if (!message) return next({ ...e400, message: "Some params in the body are missing" });
 
-    const chat = await chatServices.getChat(id);
-
-    if (!chat) return next(e404);
-
-    const messages = [...chat.messages, req.body.message];
-
-    const newChat = await chatServices.addMessage(id, messages);
-
+    const newChat = await chatServices.addMessage(id, message);
     if (!newChat) return next(e404);
+
     res.json(newChat);
   } catch (error) {
     next({ ...e500, message: error.message || error });

@@ -21,8 +21,18 @@ exports.updateChat = async (_id, body) => {
   return await Chat.findOneAndUpdate({ _id }, body, { new: true });
 };
 
-exports.addMessage = async (_id, messages) => {
-  return await Chat.findOneAndUpdate({ _id }, { messages: messages });
+exports.addMessage = async (_id, message) => {
+
+  const chat = await this.getChat(_id);
+  if (!chat) return;
+
+  const messages = [...chat.messages, {
+    role: "user",
+    timestamp: new Date(),
+    content: message
+  }];
+
+  return await Chat.findOneAndUpdate({ _id }, { messages: messages }, { new: true });
 };
 
 exports.deleteChat = async (_id) => {
