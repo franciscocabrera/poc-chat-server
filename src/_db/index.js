@@ -1,5 +1,5 @@
 // Global environment variables
-require('dotenv').config();
+require("dotenv").config();
 
 // Third-party dependencies
 const mongoose = require("mongoose");
@@ -10,6 +10,7 @@ const db = {};
 db.mongoose = mongoose;
 db.url = process.env.DATABASE_URL;
 db.User = require("../user/user.model")(mongoose);
+db.Chat = require("../chat/chat.model")(mongoose);
 // Add more models here...
 
 module.exports = db;
